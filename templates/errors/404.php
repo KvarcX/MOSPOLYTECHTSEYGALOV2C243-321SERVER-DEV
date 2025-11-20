@@ -1,7 +1,8 @@
 <?php include __DIR__ . '/../header.php'; ?>
 
-Привет, <?= $name ?>!!!
+    <h1>Страница не найдена</h1>
 
 <?php include __DIR__ . '/../footer.php'; ?>
+
 
 

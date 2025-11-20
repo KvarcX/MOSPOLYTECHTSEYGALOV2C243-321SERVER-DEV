@@ -2,8 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Мой блог</title>
-    <link rel="stylesheet" href="/style.css">
+    <title><?php echo $title ?? 'Мой блог'; ?></title>
+    <link rel="stylesheet" href="/myproject/style.css">
 </head>
 <body>
 

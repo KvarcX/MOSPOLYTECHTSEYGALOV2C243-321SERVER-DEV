@@ -1,7 +1,5 @@
 <?php include __DIR__ . '/../header.php'; ?>
 
-Привет, <?= $name ?>!!!
+Пока, <?= $name ?>!!!
 
 <?php include __DIR__ . '/../footer.php'; ?>
-
-

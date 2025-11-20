@@ -3,6 +3,8 @@
 namespace MyProject\Controllers;
 
 use MyProject\View\View;
+use MyProject\Models\Articles\Article;
+use MyProject\Models\Users\User;
 
 class MainController
 {
@@ -13,19 +15,45 @@ class MainController
         $this->view = new View(__DIR__ . '/../../../templates');
     }
 
+    private function getCurrentUser(): ?User
+    {
+        // TODO: заменить на получение текущего авторизованного пользователя
+        return User::getById(1);
+    }
+
     public function main(): void
     {
-        $articles = [
-            ['name' => 'Статья 1', 'text' => 'Текст статьи 1'],
-            ['name' => 'Статья 2', 'text' => 'Текст статьи 2'],
-        ];
+        $articles = Article::findAll();
 
-        $this->view->renderHtml('main/main.php', ['articles' => $articles]);
+        $this->view->renderHtml('main/main.php', [
+            'title' => 'Мой блог',
+            'articles' => $articles ?? [],
+            'isAdmin' => ($this->getCurrentUser() !== null) && $this->getCurrentUser()->isAdmin(),
+        ]);
     }
 
     public function sayHello(string $name): void
     {
-        $this->view->renderHtml('main/hello.php', ['name' => $name]);
+        $this->view->renderHtml('main/hello.php', [
+            'title' => 'Страница приветствия',
+            'name' => $name
+        ]);
+    }
+
+    public function aboutMe(): void
+    {
+        $this->view->renderHtml('main/about.php', [
+            'title' => 'Обо мне',
+            'content' => 'Привет! Я веб-разработчик, который любит создавать интересные проекты.'
+        ]);
+    }
+
+    public function sayBye(string $name): void
+    {
+        $this->view->renderHtml('main/bye.php', [
+            'title' => 'Прощание',
+            'name' => $name
+        ]);
     }
 }
 

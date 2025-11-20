@@ -13,6 +13,15 @@ spl_autoload_register(function (string $className): void {
 // Текущий "маршрут" (часть URL после домена), попадает из .htaccess в GET-параметр route
 $route = $_GET['route'] ?? '';
 
+// Если route пустой, попробуем взять из REQUEST_URI (для случаев когда .htaccess не сработал)
+if (empty($route)) {
+    $requestUri = $_SERVER['REQUEST_URI'] ?? '';
+    // Убираем /myproject/ из начала пути и убираем index.php если есть
+    $route = preg_replace('~^/myproject/?(?:index\.php)?~', '', $requestUri);
+    // Убираем query string если есть
+    $route = preg_replace('~\?.*$~', '', $route);
+}
+
 // Подключаем конфигурацию маршрутов (паттерн => [Controller::class, 'method'])
 $routes = require __DIR__ . '/src/routes.php';
 
